@@ -1,5 +1,5 @@
 package goetzbeer.data;
 
-public class Places {
+public class Place {
 
 }
