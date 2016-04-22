@@ -1,6 +1,7 @@
-package goetzbeer.agents;
+package goetzbeer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
+
+import goetzbeer.BeerAgent;
+import goetzbeer.data.Place;
 
 public class TestBeerAgent {
 
@@ -39,11 +43,33 @@ public class TestBeerAgent {
 	}
 
 	@Test
-	public void testCanGetListOfPlaces() {
+	public void testCanGetSmallListOfPlaces() throws IOException {
 		List<String> testTerms = new ArrayList<>();
+		testTerms.add("dublin");
 		testTerms.add("pub");
 
 		BeerAgent testPlaceFinder = new BeerAgent();
-		testPlaceFinder.findPlaces(testTerms);
+		List<Place> places = testPlaceFinder.findPlaces(testTerms, true);
+
+		assertTrue(placesContains("The Dublin Pub", places));
+	}
+
+	@Test
+	public void testCanGetLargeListOfPlaces() throws IOException {
+		List<String> testTerms = new ArrayList<>();
+		testTerms.add("kings");
+
+		BeerAgent testPlaceFinder = new BeerAgent();
+		List<Place> places = testPlaceFinder.findPlaces(testTerms, true);
+		assertEquals(213, places.size());
+	}
+
+	private boolean placesContains(String name, List<Place> places) {
+		for (Place place : places) {
+			if (place.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
