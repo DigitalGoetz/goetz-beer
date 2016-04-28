@@ -23,14 +23,7 @@ import goetzbeer.data.PlacePage;
 public class BeerAgent {
 	public static final String SEARCH_URL = "https://www.beermenus.com/search?q=";
 	public static final String BASE_URL = "https://www.beermenus.com";
-
-	String getQueryUrl(List<String> terms) {
-		if (terms.isEmpty()) {
-			return "";
-		}
-		String join = Joiner.on('+').join(terms);
-		return SEARCH_URL + join;
-	}
+	private Map<String, Comparator<Beer>> comparators = null;
 
 	public List<Place> findPlaces(List<String> terms, boolean fetchAll) throws IOException {
 		return new Page(Jsoup.connect(getQueryUrl(terms)).get(), fetchAll).getPlaces();
@@ -46,8 +39,6 @@ public class BeerAgent {
 		return all;
 	}
 
-	private Map<String, Comparator<Beer>> comparators = null;
-
 	public Map<String, Comparator<Beer>> getComparators() {
 		if (comparators == null) {
 			comparators = new HashMap<>();
@@ -57,6 +48,14 @@ public class BeerAgent {
 			comparators.put("Most Efficient Beer", new MostEfficientBeer());
 		}
 		return comparators;
+	}
+
+	String getQueryUrl(List<String> terms) {
+		if (terms.isEmpty()) {
+			return "";
+		}
+		String join = Joiner.on('+').join(terms);
+		return SEARCH_URL + join;
 	}
 
 }

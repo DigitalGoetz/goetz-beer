@@ -9,6 +9,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import goetzbeer.BeerAgent;
+
 public class Page {
 
 	Document source;
@@ -87,7 +89,7 @@ public class Page {
 
 		if (hasNext() && isFetchAll()) {
 			try {
-				nextPage = new Page(Jsoup.connect(BASE_URL + getNextPath()).get(), isFetchAll());
+				nextPage = new Page(Jsoup.connect(BeerAgent.BASE_URL + getNextPath()).get(), isFetchAll());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,6 +155,4 @@ public class Page {
 		}
 		return false;
 	}
-
-	public static String BASE_URL = "https://www.beermenus.com";
 }
