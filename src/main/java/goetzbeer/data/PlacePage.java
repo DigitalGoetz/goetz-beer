@@ -81,7 +81,7 @@ public class PlacePage {
 					Elements typeEls = featuredBeer.select(".pure-g > .pure-u-2-3 > p");
 					if (typeEls.size() > 0) {
 						String base = typeEls.get(0).text();
-						String[] details = base.split(" Â· ");
+						String[] details = base.split(" · ");
 						if (details.length == 1) {
 							type = details[0];
 						} else if (details.length == 2) {
